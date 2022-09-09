@@ -136,6 +136,16 @@ INSERT INTO CHAT(Codice, CodiceSessione) VALUES ("chat-03", "100153");
 -- Dati per la tabella `CHAT`--
 INSERT INTO PRESENTAZIONEDIARTICOLI(Codice, OraInizio, OraFine, NumSequenza, Titolo, NumPagine, FilePresentazione, StatoSvolgimento, UsernameUtentePresenter, CodiceSessione) 
 	VALUES ("101", "14:00:00", "17:00:00", "1", "Articolo1_ICSI", "15", "1", "COPERTO", "Francesco1", "100151");
+INSERT INTO PRESENTAZIONEDIARTICOLI(Codice, OraInizio, OraFine, NumSequenza, Titolo, NumPagine, FilePresentazione, StatoSvolgimento, UsernameUtentePresenter, CodiceSessione) 
+	VALUES ("102", "14:00:00", "17:00:00", "1", "Articolo2_ICSI", "16", "2", "COPERTO", "Francesco1", "100152");
+
+-- Dati per la tabella `PAROLACHIAVE`--
+INSERT INTO PAROLACHIAVE(Descrizione, CodicePresentazioneDiArticoli) VALUES ("Misurazioni", "101");
+INSERT INTO PAROLACHIAVE(Descrizione, CodicePresentazioneDiArticoli) VALUES ("Deeplearning", "102");
+
+/*
+SONO ARRIVATA FINO A QUA
+*/
 
 /* POPOLAMENTO DELLE TABELLE */
 INSERT INTO PRESENTAZIONE(Codice,Inizio,Fine,NumeroSequenza) VALUES (101, "9:00:00","12:00:00", 01);
@@ -165,17 +175,6 @@ INSERT INTO PAROLACHIAVE(CodicePresentazione,Parola) VALUES (102, "Componenti ot
 INSERT INTO PAROLACHIAVE(CodicePresentazione,Parola) VALUES (103, "Sistemi");
 INSERT INTO PAROLACHIAVE(CodicePresentazione,Parola) VALUES (103, "Algoritmo");
 
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (101, "Francesco", "Montanari");
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (102, "Paola", "Ricci");
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (102, "Marco", "Mazzotti");
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (103, "Paola", "Ricci");
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (103, "Filippo", "Magnani");
-
-INSERT INTO MESSAGGIO(CodiceSessione,UsernameUtente,DataMessaggio,TestoMessaggio) VALUES (200622, "Francesco1", "2022-06-22", "Ciao a tutti!");
-INSERT INTO MESSAGGIO(CodiceSessione,UsernameUtente,DataMessaggio,TestoMessaggio) VALUES (200622, "Lucia", "2022-06-22", "Ciao!");
-INSERT INTO MESSAGGIO(CodiceSessione,UsernameUtente,DataMessaggio,TestoMessaggio) VALUES (200623, "Lucia", "2022-06-23", "Buongiorno");
-INSERT INTO MESSAGGIO(CodiceSessione,UsernameUtente,DataMessaggio,TestoMessaggio) VALUES (200623, "Paola30", "2022-06-23", "Interessante");
-
 INSERT INTO PRESENTAZIONE(Codice,Inizio,Fine,NumeroSequenza) VALUES (201, "10:00:00","13:00:00", 01);
 INSERT INTO PRESENTAZIONE(Codice,Inizio,Fine,NumeroSequenza) VALUES (202, "13:00:00","16:00:00", 02);
 INSERT INTO PRESENTAZIONE(Codice,Inizio,Fine,NumeroSequenza) VALUES (203, "10:00:00","13:00:00", 01);
@@ -200,20 +199,6 @@ INSERT INTO RISORSA(UsernameUtente,CodicePresentazione,LinkRisorsa,DescrizioneRi
 INSERT INTO RISORSA(UsernameUtente,CodicePresentazione,LinkRisorsa,DescrizioneRisorsa) VALUES ("PietroL", 201, "www.tutorial1.com", "aaa");
 INSERT INTO RISORSA(UsernameUtente,CodicePresentazione,LinkRisorsa,DescrizioneRisorsa) VALUES ("PietroL", 201, "www.tutorial1_2.com", "aaa");
 
-INSERT INTO SESSIONE(Codice,Titolo,NumeroPresentazioni,Inizio,Fine,Link,GiornoGiornata,AnnoEdizioneConferenza,AcronimoConferenza) 
-VALUES (3002,"Giornata 20/04 WIT",1,"12:00:00","17:00:00","www.WIT_giornata1.it","2022-04-20",2022, "WIT");
-INSERT INTO SESSIONE(Codice,Titolo,NumeroPresentazioni,Inizio,Fine,Link,GiornoGiornata,AnnoEdizioneConferenza,AcronimoConferenza) 
-VALUES (3003,"Giornata 21/04 WIT",1,"14:00:00","18:00:00","www.WIT_giornata2.it","2022-04-21",2022, "WIT");
-INSERT INTO SESSIONE(Codice,Titolo,NumeroPresentazioni,Inizio,Fine,Link,GiornoGiornata,AnnoEdizioneConferenza,AcronimoConferenza) 
-VALUES (3004,"Giornata 22/04 WIT",2,"10:00:00","18:00:00","www.WIT_giornata3.it","2022-04-22",2022, "WIT");
-
-INSERT INTO MESSAGGIO(CodiceSessione,UsernameUtente,DataMessaggio,TestoMessaggio) VALUES (3002, "Mari", "2022-04-20", "Bello!");
-INSERT INTO MESSAGGIO(CodiceSessione,UsernameUtente,DataMessaggio,TestoMessaggio) VALUES (3002, "Francesco1", "2022-04-20", "Sono d'accordo!");
-INSERT INTO MESSAGGIO(CodiceSessione,UsernameUtente,DataMessaggio,TestoMessaggio) VALUES (3003, "Paola30", "2022-04-21", "Interessante");
-INSERT INTO MESSAGGIO(CodiceSessione,UsernameUtente,DataMessaggio,TestoMessaggio) VALUES (3003, "Lucia", "2022-04-21", "Si molto");
-INSERT INTO MESSAGGIO(CodiceSessione,UsernameUtente,DataMessaggio,TestoMessaggio) VALUES (3004, "Francesco1", "2022-04-22", "A che ora inizia?");
-INSERT INTO MESSAGGIO(CodiceSessione,UsernameUtente,DataMessaggio,TestoMessaggio) VALUES (3004, "Mari", "2022-04-22", "Alle 10:00");
-
 INSERT INTO PRESENTAZIONE(Codice,Inizio,Fine,NumeroSequenza) VALUES (301, "12:00:00","17:00:00", 01);
 INSERT INTO PRESENTAZIONE(Codice,Inizio,Fine,NumeroSequenza) VALUES (302, "14:00:00","16:00:00", 01);
 INSERT INTO PRESENTAZIONE(Codice,Inizio,Fine,NumeroSequenza) VALUES (303, "10:00:00","12:00:00", 01);
@@ -223,11 +208,6 @@ INSERT INTO FORMAZIONE(CodiceSessione,CodicePresentazione) VALUES (3002, 301);
 INSERT INTO FORMAZIONE(CodiceSessione,CodicePresentazione) VALUES (3003, 302);
 INSERT INTO FORMAZIONE(CodiceSessione,CodicePresentazione) VALUES (3004, 303);
 INSERT INTO FORMAZIONE(CodiceSessione,CodicePresentazione) VALUES (3004, 304);
-
-INSERT INTO ARTICOLO(CodicePresentazione, Titolo, NumeroPagine, StatoSvolgimento, UsernameUtente) VALUES (301, "Articolo1_WIT", 20, "Non Coperto", null);
-INSERT INTO ARTICOLO(CodicePresentazione, Titolo, NumeroPagine, StatoSvolgimento, UsernameUtente) VALUES (302, "Articolo2_WIT", 5, "Non Coperto", null);
-INSERT INTO ARTICOLO(CodicePresentazione, Titolo, NumeroPagine, StatoSvolgimento, UsernameUtente) VALUES (303, "Articolo3_WIT", 14, "Coperto", "Francesco1");
-INSERT INTO TUTORIAL(CodicePresentazione, Titolo, Abstract) VALUES (304, "Tutorial1_WIT", "aaa");
 
 INSERT INTO DIMOSTRAZIONE(UsernameUtente,CodicePresentazione) VALUES ("PietroL", 304);
 
@@ -239,21 +219,7 @@ INSERT INTO PAROLACHIAVE(CodicePresentazione,Parola) VALUES (303, "Scanner 3D");
 INSERT INTO PAROLACHIAVE(CodicePresentazione,Parola) VALUES (303, "Robot");
 INSERT INTO PAROLACHIAVE(CodicePresentazione,Parola) VALUES (303, "Scansioni lienari");
 
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (301, "Francesco", "Montanari");
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (301, "Laura", "Bianchi");
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (301, "Sofia", "Balzani");
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (302, "Paola", "Ricci");
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (302, "Lorenzo", "Antonelli");
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (303, "Francesco", "Montanari");
 
-INSERT INTO SESSIONE(Codice,Titolo,NumeroPresentazioni,Inizio,Fine,Link,GiornoGiornata,AnnoEdizioneConferenza,AcronimoConferenza) 
-VALUES (400527,"Mattina 27/05 SPNLP", 1,"9:00:00","12:00:00","www.SPNLP_mattina1.it","2022-05-27",2022, "SPNLP");
-INSERT INTO SESSIONE(Codice,Titolo,NumeroPresentazioni,Inizio,Fine,Link,GiornoGiornata,AnnoEdizioneConferenza,AcronimoConferenza) 
-VALUES (400528,"Pomeriggio 27/05 SPNLP", 1,"14:00:00","18:00:00","www.SPNLP_pomeriggio1.it","2022-05-27",2022, "SPNLP");
-INSERT INTO SESSIONE(Codice,Titolo,NumeroPresentazioni,Inizio,Fine,Link,GiornoGiornata,AnnoEdizioneConferenza,AcronimoConferenza) 
-VALUES (400529,"Mattina 28/05 SPNLP", 2,"9:00:00","12:00:00","www.SPNLP_mattina2.it","2022-05-28",2022, "SPNLP");
-INSERT INTO SESSIONE(Codice,Titolo,NumeroPresentazioni,Inizio,Fine,Link,GiornoGiornata,AnnoEdizioneConferenza,AcronimoConferenza) 
-VALUES (400530,"Pomeriggio 28/05 SPNLP",1,"14:00:00","18:00:00","www.SPNLP_pomeriggio2.it","2022-05-28",2022, "SPNLP");
 
 INSERT INTO MESSAGGIO(CodiceSessione,UsernameUtente,DataMessaggio,TestoMessaggio) VALUES (400527, "Francesco1", "2022-05-27", "Ciao a tutti!");
 INSERT INTO MESSAGGIO(CodiceSessione,UsernameUtente,DataMessaggio,TestoMessaggio) VALUES (400527, "Lucia", "2022-05-27", "Ciao!");
@@ -274,15 +240,6 @@ INSERT INTO FORMAZIONE(CodiceSessione,CodicePresentazione) VALUES (400529, 401);
 INSERT INTO FORMAZIONE(CodiceSessione,CodicePresentazione) VALUES (400530, 403);
 INSERT INTO FORMAZIONE(CodiceSessione,CodicePresentazione) VALUES (400530, 402);
 
-INSERT INTO ARTICOLO(CodicePresentazione, Titolo, NumeroPagine, StatoSvolgimento, UsernameUtente) VALUES (401, "Articolo1_SPNLP", 18, "Coperto", "Paola30");
-INSERT INTO TUTORIAL(CodicePresentazione, Titolo, Abstract) VALUES (402, "Tutorial1_SPNLP", "aaa");
-INSERT INTO TUTORIAL(CodicePresentazione, Titolo, Abstract) VALUES (403, "Tutorial2_SPNLP", "aaa");
-
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (401, "Paola", "Ricci");
-INSERT INTO AUTORE(CodicePresentazione,Nome,Cognome) VALUES (401, "Mattia", "Giunchi");
-
-INSERT INTO PAROLACHIAVE(CodicePresentazione,Parola) VALUES (401, "Misurazioni");
-INSERT INTO PAROLACHIAVE(CodicePresentazione,Parola) VALUES (402, "Deeplearning");
 
 INSERT INTO DIMOSTRAZIONE(UsernameUtente,CodicePresentazione) VALUES ("Luca", 402);
 INSERT INTO DIMOSTRAZIONE(UsernameUtente,CodicePresentazione) VALUES ("Luca", 403);
