@@ -1,8 +1,7 @@
 <?php
+define("TITLE", "Home Page");
 include ('layouts/header.php');
 ?>
-
-
 
         <!-- carosello -->
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">

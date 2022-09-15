@@ -1,67 +1,36 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-</head>
-<body>
-<p> 
-<?php
-   $username=$_POST["username"];
-   $password=$_POST["password"];
-   
-   // Connessione al DB
-   try {
-      $pdo=new PDO('mysql:host=localhost;dbname=Accessi','root', 'root');
-      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-   }
-   catch(PDOException $e) {
-      echo("[ERRORE] Connessione al DB non riuscita. Errore: ".$e->getMessage());
-      exit();
-   }
-   
-   
-   try {
-     // Query SQL per l'inserimento dati
-     $sql='SELECT COUNT(*) AS counter FROM Login  WHERE (Utente="'.$username.'") AND (Password="'.$password.'")';
-   /*$sql='SELECT COUNT(*) AS counter FROM Login  WHERE (Utente=:lab1) AND (Password=:lab2)';
-    $res=$pdo->prepare($sql);
-    $res->bindValue(":lab1",$username);
-    $res->bindValue(":lab2",$password);
-    $res->execute();
-    */
-     //echo($sql."<br>");
-    $res=$pdo->query($sql);
-   }
-  catch(PDOException $e) {
-    echo("[ERRORE] Query SQL (Insert) non riuscita. Errore: ".$e->getMessage());
-    exit();
-  }
-  
- 
-   $row=$res->fetch();
-   if ($row['counter']>0) {
-       echo("<b> Benvenuto nel sistema, ".$username."</b>"); 
-      } else {
-       echo("<b>Accesso non autorizzato! </b>");  
-   }
-  
-  $linkback='<br><br><a href="formlogin.html"> Torna Indietro </a>';
-  echo($linkback);
-      
- ?>
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-</p>
-</body>
+    <title>Login</title>
+    <!-- js -->
+    <!-- CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/loginStyle.css" rel="stylesheet">
+  </head>
 
+  <body class="text-center">  
+    <main class="form-signin w-100 m-auto">
+        <img class="mb-4" src="risorse/immagini/logo.png" alt="" height="100px">
+
+        <div class="form-floating">
+          <input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+          <label for="floatingInput">Email</label>
+        </div>
+
+        <div class="form-floating">
+          <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+          <label for="floatingPassword">Password</label>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" onclick="login()" type="submit">Login</button>
+        <p style="margin-top: 10px;">Se non hai un account <a href="/registerPage">Registrati!</a></p>
+    </main>
+  </body>
 </html>
-
-<?php
-/*$sql='SELECT COUNT(*) AS counter FROM Login  WHERE (Utente=:lab1) AND (Password=:lab2)';
-     $res=$pdo->prepare($sql);
-     $res->bindValue(":lab1",$username);
-     $res->bindValue(":lab2",$password);
-     $res->execute();
-     
-     session_start();
-       $_SESSION_['user']=$username;
-     */
-?>
