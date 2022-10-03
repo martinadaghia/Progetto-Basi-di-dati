@@ -45,11 +45,33 @@
 
 
 
-<!-- NUMERO CONFERENZE -->
-<div>
-<p class="col-md-8 fs-5">Conferenze registrate: <?php echo $templateParams["conferenze"][0]["NumConf"]?></p>
-
+<!-- DATI DA STAMPARE -->
+<div class="m-5">
+<p class="col-md-8 fs-5">Totale conferenze registrate: <?php echo $templateParams["conferenze"][0]["NumConf"]?></p>
+<p class="col-md-8 fs-5">Totale conferenze attive: <?php echo $templateParams["conferenzeAttive"][0]["NumConfAtt"]?></p>
+<p class="col-md-8 fs-5">Totale utenti registrati: <?php echo $templateParams["utenti"][0]["NumUtenti"]?></p>
 </div>
+
+<div class="m-5">
+  <p class="col-md-8 fs-5">Classifica presenter: </p>
+  <li>
+    <?php foreach($templateParams['presenter'] as $presenter): ?>
+      <li><?php echo $presenter['UsernameUtente'] . " - Voto: " . $presenter['Media'];?></li> <br>
+    <?php endforeach; ?>     
+  </li>
+</div>
+
+<div class="m-5">
+  <p class="col-md-8 fs-5">Classifica speaker: </p>
+  <li>
+    <?php foreach($templateParams['speaker'] as $speaker): ?>
+      <li><?php echo $speaker['UsernameUtente'] . " - Voto: " . $speaker['Media'];?></li><br>
+    <?php endforeach; ?>
+  </li>
+</div>
+
+
+
 
 
 <?php

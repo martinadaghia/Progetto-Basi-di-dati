@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    require_once("Database.php");
+    require_once("database.php");
     
     $dbh = new DatabaseHelper("localhost", "root", "root", "CONFVIRTUAL", 8889);
 

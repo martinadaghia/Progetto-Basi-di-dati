@@ -8,5 +8,5 @@
     $templateParams["presenter"] = $dbh->avgVotoPresenter();
     $templateParams["speaker"] = $dbh->avgVotoSpeaker();
 
-    require 'template/templateHome.php';
+    require 'model/modelHome.php';
 ?>
