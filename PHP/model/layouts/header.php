@@ -18,6 +18,8 @@
         <!-- barra di navigazione -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
+            <img src="risorse/immagini/logoHomepage.png" height="80px">
+
               <a class="navbar-brand" href="http://localhost/ProgettoBasi/PHP/model/modelHome.php">CONFVIRTUAL</a>
 
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

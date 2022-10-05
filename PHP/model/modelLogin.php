@@ -16,24 +16,59 @@
   <link href="css/loginStyle.css" rel="stylesheet">
 </head>
 
+
+
 <body class="text-center">
+  <?php
+    require_once("../connessione.php"); 
+
+    $user = !empty($_POST['emailLogin']) ? $_POST['emailLogin'] : '';
+    $password = !empty($_POST['emailPassword']) ? $_POST['emailPassword'] : '';
+
+    
+  ?>
+
+
   <main class="form-signin w-100 m-auto">
 
     <img class="mb-4" src="risorse/immagini/logo.png" alt="" height="100px">
 
-    <div class="form-floating">
-      <input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
-      <label for="floatingInput">Email</label>
-    </div>
+    <form name="formLogin" method="post"> <!-- post per maggiore sicurezza, per passare dati sensibili alla pagina --> 
 
-    <div class="form-floating">
-      <input type="password" class="form-control" id="passwordInput" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
+      <div class="form-floating">
+        <input name="emailLogin" value="<?php echo($user)  ?>" type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+        <label for="floatingInput">Email</label>
+      </div>
 
-    <button class="w-100 btn btn-lg btn-primary" onclick="login()" type="submit">Login</button>
-    <p style="margin-top: 10px;">Se non hai un account <a href="/registerPage">Registrati!</a></p>
+      <div class="form-floating">
+        <input name="passwordLogin" value="<?php echo($password)  ?>" type="password" class="form-control" id="passwordInput" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <button class="w-100 btn btn-lg btn-primary" onclick="login()" type="submit">Login</button>
+      <p style="margin-top: 10px;">Se non hai un account <a href="/registerPage">Registrati!</a></p>
+    </form>
+
   </main>
 </body>
+
+<?php
+  
+  // controllo che ci sia scritto qualcosa nel textfield
+  if(!empty($_POST["emailLogin"]) && !empty($_POST["passwordLogin"])){
+    $risultatiQuery=$dbh->getUtente($_POST["emailLogin"]);
+
+    // controllo se la query  ritorna qualcosa
+    if(count($risultatiQuery)>0 && $_POST["emailPassword"]==$risultatiQuery[0]['Password']){
+      $_SESSION["username"]=$_POST["emailLogin"]; // per non perdere lo username
+    }
+  }
+
+  if(!empty($_SESSION["username"])){ 
+    // non c'è bisogno che user faccia il login, spostiamo lo user in una pagina
+    // se lo user entra nella pagina login ma si è già loggato, lo reinderizzamo alla pagina home
+    header("location: modelHome.php"); 
+  }
+?>
 
 </html>

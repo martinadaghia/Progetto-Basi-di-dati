@@ -1,6 +1,10 @@
 <?php
+
   define("TITLE", "Home Page");
   include('layouts/header.php');
+?>
+<?php
+  require_once("../connessione.php"); // controlla se il file è già messo dentro (se è gia stato messo non lo fa)
 ?>
 
 <!-- carosello -->
@@ -51,6 +55,8 @@
 <p class="col-md-8 fs-5">Totale conferenze attive: <?php echo $templateParams["conferenzeAttive"][0]["NumConfAtt"]?></p>
 <p class="col-md-8 fs-5">Totale utenti registrati: <?php echo $templateParams["utenti"][0]["NumUtenti"]?></p>
 </div>
+
+
 
 <div class="m-5">
   <p class="col-md-8 fs-5">Classifica presenter: </p>

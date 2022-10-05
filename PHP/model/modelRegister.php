@@ -20,20 +20,27 @@
 <body class="text-center">
   <main class="form-signin w-100 m-auto">
 
-    <img class="mb-4" src="images/animalhouse.png" alt="" height="100px">
+  <img class="mb-4" src="risorse/immagini/logo.png" alt="" height="100px">
 
-    <div class="form-floating">
-      <input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
-      <label for="floatingInput">Email</label>
-    </div>
+    <form name="formRegister" action="" method="post"> <!-- post per maggiore sicurezza, per passare dati sensibili alla pagina --> 
 
-    <div class="form-floating">
-      <input type="password" class="form-control" id="passwordInput" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
+      <div class="form-floating">
+        <input name="emailRegister" type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+        <label for="floatingInput">Email</label>
+      </div>
 
-    <button class="w-100 btn btn-lg btn-primary" id="submit" onclick="register()" type="submit">Registrati</button>
+      <div class="form-floating">
+        <input name="passwordRegister" type="password" class="form-control" id="passwordInput" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <button class="w-100 btn btn-lg btn-primary" id="submit" onclick="register()" type="submit">Registrati</button>
+    </form>
   </main>
 </body>
+
+<?php
+  require_once("../connessione.php"); 
+?>
 
 </html>
