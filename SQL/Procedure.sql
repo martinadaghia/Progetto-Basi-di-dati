@@ -85,12 +85,9 @@ DELIMITER ;
 
 #Stored procedure per la registrazione di un amministratore alla piattaforma
 DELIMITER |
-CREATE PROCEDURE registrazioneAmministratore(IN InputUsername VARCHAR(100), IN InputPassword VARCHAR(50), IN InputNome VARCHAR(100), IN InputCognome VARCHAR(100), IN InputLuogoNascita VARCHAR(50), IN InputDataNascita DATE, OUT Esito VARCHAR(100)) 
+CREATE PROCEDURE registrazioneAmministratore(IN InputUsername VARCHAR(100)) 
 BEGIN
-	CALL registrazioneUtente(InputUsername, InputPassword, InputNome, InputCognome, InputLuogoNascita, InputDataNascita, Esito);
-	IF (Esito = 'Utente inserito') THEN
-		INSERT INTO AMMINISTRATORE (UsernameUtente) VALUES (InputUsername);
-	END IF;	
+	INSERT INTO AMMINISTRATORE (UsernameUtente) VALUES (InputUsername);
 END;
 |
 DELIMITER ;
@@ -123,7 +120,7 @@ DELIMITER ;
 
 #Stored procedure per l'inserimento di foto e logo 
 DELIMITER |
-CREATE PROCEDURE inserimentoFoto(IN InputNomeFile VARCHAR(50), IN InputDatiLogo BLOB, OUT Esito VARCHAR(100)) 
+CREATE PROCEDURE inserimentoFoto(IN InputNomeFile VARCHAR(50), IN InputDatiLogo LONGBLOB, OUT Esito VARCHAR(100)) 
 BEGIN
 	INSERT INTO LOGO (NomeFile, DatiLogo) VALUES (InputNomeFile, InputDatiLogo);
     SET Esito = 'Foto caricata';
