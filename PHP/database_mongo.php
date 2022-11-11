@@ -1,8 +1,8 @@
 <?php
-  require 'C:\Users\stefa\vendor/autoload.php';  //da modificare con proprio path di autoload.php
-                                                 //per utilizzo mongodb
-  use MongoDB\Client;
-  
+     require 'C:\Users\stefa\vendor/autoload.php';  //da modificare con proprio path di autoload.php
+  //per utilizzo mongodb
+      use MongoDB\Client;
+      
     class DatabaseHelper{
         
         private $db;
@@ -16,7 +16,7 @@
                 die("Connection failed: " . $this->db->connect_error);
             }   
             $this->client = new Client('mongodb://localhost:27017/');   
-            $this->collection = $this->client->ConfvirtualMongo->logInserimenti;  
+            $this->collection = $this->client->ConfvirtualMongo->logInserimenti;       
         }
 
 
@@ -38,16 +38,13 @@
             return $result->fetch_all(MYSQLI_ASSOC); 
         }
 
+        
 
         public function insertUser($username, $password, $nome, $cognome, $data, $luogo){
             $query="call registrazioneUtente(?,?,?,?,?,?,@a)";
             $stmt=$this->db->prepare($query); 
             $stmt->bind_param('ssssss', $username, $password, $nome, $cognome, $data, $luogo); 
             $stmt->execute();
-
-            #$this->client = new Client('mongodb://localhost:27017/');
-            #$this->collection = $this->client->ConvirtualMongo->inserimenti;
-           
             $result = $this->collection->insertOne([
                 'tipoOggetto'    => "Utente",
                 'username'   => $username,
@@ -106,7 +103,10 @@
             $stmt=$this->db->prepare($query); 
             $stmt->bind_param('sssss', $username, $nome, $cv, $foto, $dipartimento); 
             $stmt->execute();
-  
+
+            
+
+
             $result=$stmt->get_result();
             return $result->fetch_all(MYSQLI_ASSOC); 
         }
@@ -117,8 +117,6 @@
             $stmt=$this->db->prepare($query); 
             $stmt->bind_param('ss', $nomeFile, $datiFoto);
             $stmt->execute();
-            $this->client = new Client('mongodb://localhost:27017/');
-            $this->collection = $this->client->ConvirtualMongo->inserimenti;
             $result = $this->collection->insertOne([
                 'tipoOggetto'    => "Foto",
                 'nomeFile'   => $nomeFile,
@@ -145,7 +143,6 @@
             $result=$stmt->get_result();
             return $result->fetch_all(MYSQLI_ASSOC); 
         }
-
 
         public function getUltimoFile(){
             $query="SELECT idFile FROM fileesterni ORDER BY idFile desc limit 1"; // ritorna l'ultimo inserito
@@ -241,7 +238,6 @@
             $stmt=$this->db->prepare($query); 
             $stmt->bind_param('sis', $acrConferenza, $annoEdizioneConferenza, $username);
             $stmt->execute();
-
             $result = $this->collection->insertOne([
                 'tipoOggetto'    => "RegistrazioneUtenteConf",
                 'acronimoConferenza'   => $acrConferenza,
@@ -270,8 +266,13 @@
 
         // articoli
         public function getArticoli($codiceSessione){
-            $query="SELECT PA.Codice, PA.OraInizio, PA.OraFine, PA.Titolo, UsernameUtentePresenter 
-                    FROM PRESENTAZIONEDIARTICOLI as PA JOIN SESSIONE as S ON PA.CodiceSessione=S.Codice WHERE PA.CodiceSessione=?"; 
+            $query="SELECT PA.Codice, PA.OraInizio, PA.OraFine, PA.Titolo, UsernameUtentePresenter, f.NomeFile
+                    FROM PRESENTAZIONEDIARTICOLI as PA 
+                    JOIN SESSIONE as S 
+                    ON PA.CodiceSessione=S.Codice 
+                    JOIN fileesterni AS f
+                    ON f.idFile=PA.FilePresentazione
+                    WHERE PA.CodiceSessione=?"; 
             $stmt=$this->db->prepare($query); 
             $stmt->bind_param('i', $codiceSessione);
             $stmt->execute();
@@ -281,14 +282,20 @@
 
         // tutorial
         public function getTutorial($codiceSessione){
-            $query="SELECT T.Codice, T.OraInizio, T.OraFine, T.Titolo FROM TUTORIAL as T 
-                    JOIN SESSIONE as S ON T.CodiceSessione=S.Codice WHERE T.CodiceSessione=?"; 
+            $query="SELECT T.Codice, T.OraInizio, T.OraFine, T.Titolo 
+                    FROM TUTORIAL as T 
+                    JOIN SESSIONE as S 
+                    ON T.CodiceSessione=S.Codice 
+                    WHERE T.CodiceSessione=?"; 
             $stmt=$this->db->prepare($query); 
             $stmt->bind_param('i', $codiceSessione);
             $stmt->execute();
             $result=$stmt->get_result();
             return $result->fetch_all(MYSQLI_ASSOC); 
         }
+
+
+
 
 
         // prendo messaggi in una chat di sessione 
@@ -301,6 +308,8 @@
             $result=$stmt->get_result();
             return $result->fetch_all(MYSQLI_ASSOC); 
         }
+
+
 
 
         // ritorna codice chat
@@ -321,13 +330,13 @@
             $stmt->bind_param('sss', $testo, $codiceChat, $username);
             $stmt->execute();
             if($codiceChat != NULL){
-              $result = $this->collection->insertOne([
-                'tipoOggetto'    => "Messaggio",
-                'testo'   => $testo,
-                'codiceChat' => $codiceChat,
-                'username'     => $username
-            ]);
-             }
+                $result = $this->collection->insertOne([
+                  'tipoOggetto'    => "Messaggio",
+                  'testo'   => $testo,
+                  'codiceChat' => $codiceChat,
+                  'username'     => $username
+              ]);
+               }
         }
 
 
@@ -452,11 +461,31 @@
                 'tipoOggetto'    => "modificaUniPresenter",
                 'username'   => $username,
                 'nome'   => $nome,
-                'dipa'   => $dipa
+                'dipartimento'   => $dipa
             ]);
         }
 
 
+        public function getFotoProfiloSpeaker($username){
+            $query="Select l.NomeFile FROM speaker AS s JOIN logo AS l ON l.idLogo=s.Foto WHERE s.UsernameUtente=?"; 
+            $stmt=$this->db->prepare($query); 
+            $stmt->bind_param('s', $username);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC); 
+
+
+        }
+
+
+        public function getFotoProfiloPresenter($username){
+            $query="Select l.NomeFile FROM presenter AS s JOIN logo AS l ON l.idLogo=s.Foto WHERE s.UsernameUtente=?"; 
+            $stmt=$this->db->prepare($query); 
+            $stmt->bind_param('s', $username);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC); 
+        }
 
 
 
@@ -478,6 +507,11 @@
             $stmt=$this->db->prepare($query); 
             $stmt->bind_param('ss', $username, $cv);
             $stmt->execute();
+            $result = $this->collection->insertOne([
+                'tipoOggetto'    => "modificaCVSpeaker",
+                'username'   => $username,
+                'CV'   => $cv
+            ]);
         }
 
         // modifica Universita speaker
@@ -514,7 +548,6 @@
             $stmt=$this->db->prepare($query); 
             $stmt->bind_param('ssss', $linkWeb, $desc, $codeTutorial, $username);
             $stmt->execute();
-   
             $result = $this->collection->insertOne([
                 'tipoOggetto' => "RisorsaSpeaker",
                 'linkWeb'   => $linkWeb,
@@ -800,17 +833,55 @@
             $stmt=$this->db->prepare($query);
             $stmt->bind_param('ss', $titolo, $username);
             $stmt->execute();
-
             $result = $this->collection->insertOne([
                 'tipoOggetto'    => "PresentazioneFavorita",
                 'username'   => $username,
                 'password' => $titolo
             ]);
+        }
 
-
+        public function getInfoUtente($username){
+            $query="SELECT Username, Nome, Cognome, DataNascita, LuogoNascita FROM Utente WHERE Username=?"; 
+            $stmt=$this->db->prepare($query);
+            $stmt->bind_param('s', $username);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC); 
         }
 
 
+        public function getFotoPerSponsor($acronimo, $anno){
+            $query="SELECT s.Nome, s.Importo, l.NomeFile
+            FROM Logo AS l
+            JOIN sponsor AS s
+            ON s.Logo=l.idLogo
+            JOIN disposizione AS d
+            ON d.NomeSponsor=s.Nome
+            WHERE d.AcronimoConferenza = ? AND d.AnnoEdizioneConferenza = ?"; 
+            $stmt=$this->db->prepare($query);
+            $stmt->bind_param('ss', $acronimo, $anno);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC); 
+        }
+
+        public function getInfoPresenter($username){
+            $query="SELECT Cv, Nome, Dipartimento FROM presenter WHERE UsernameUtente=?"; 
+            $stmt=$this->db->prepare($query);
+            $stmt->bind_param('s', $username);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC); 
+        }
+
+        public function getInfoSpeaker($username){
+            $query="SELECT Cv, Nome, Dipartimento FROM speaker WHERE UsernameUtente=?"; 
+            $stmt=$this->db->prepare($query);
+            $stmt->bind_param('s', $username);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            return $result->fetch_all(MYSQLI_ASSOC); 
+        }
 
     }
 ?>
